@@ -13,6 +13,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	target := fmt.Sprintf(format, r.Host, r.RequestURI)
 
 	w.Header().Set("Location", target)
+	w.WriteHeader(301)
 }
 
 func main() {
