@@ -1,5 +1,7 @@
 GO_SRC := $(shell find $(CURDIR) -name '*.go')
 BIN := redirect
+REPO := mangoweb/www-redirect
+TAG := latest
 
 build: $(BIN)
 
@@ -11,6 +13,11 @@ test:
 
 push: build test
 	git push
+
+image:
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -i -o main src/main.go
+	docker build -t $(REPO):$(TAG) .
+	rm -rf main
 
 clean:
 	git clean -f -x .
