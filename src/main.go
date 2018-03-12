@@ -6,11 +6,14 @@ import (
 	"os"
 	"fmt"
 	"strings"
+	"net/url"
 )
 
 const (
 	HostVar = "$host"
+	SafeHostVar = "$safeHost" // url encoded
 	PathVar = "$path"
+	SafePathVar = "$safePath" // url encoded
 )
 
 var format string
@@ -18,7 +21,9 @@ var format string
 func handler(w http.ResponseWriter, r *http.Request) {
 	target := format
 	target = strings.Replace(target, HostVar, r.Host, -1)
+	target = strings.Replace(target, SafeHostVar, url.QueryEscape(r.Host), -1)
 	target = strings.Replace(target, PathVar, r.RequestURI, -1)
+	target = strings.Replace(target, SafePathVar, url.QueryEscape(r.RequestURI), -1)
 
 	w.Header().Set("Location", target)
 	w.WriteHeader(301)
