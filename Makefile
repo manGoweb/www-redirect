@@ -1,7 +1,7 @@
 GO_SRC := $(shell find $(CURDIR) -name '*.go')
 BIN := redirect
 REPO := mangoweb/www-redirect
-TAG := latest
+TAG := 1.0
 
 build: $(BIN)
 
